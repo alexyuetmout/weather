@@ -215,6 +215,13 @@ export default function Home() {
             >
               🌤️ OpenWeatherMap 版本
             </a>
+            
+            <a
+              href="/styles"
+              className="block w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 text-center"
+            >
+              🎨 15个设计风格展示
+            </a>
           </div>
         </div>
         
