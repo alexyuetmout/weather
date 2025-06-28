@@ -200,13 +200,22 @@ export default function Home() {
             </div>
           </div>
           
-          <button
-            onClick={fetchRandomWeather}
-            disabled={loading}
-            className="w-full bg-white/30 hover:bg-white/40 disabled:opacity-50 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100"
-          >
-            {loading ? '获取中...' : '🎲 随机天气'}
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={fetchRandomWeather}
+              disabled={loading}
+              className="w-full bg-white/30 hover:bg-white/40 disabled:opacity-50 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100"
+            >
+              {loading ? '获取中...' : '🎲 随机天气'}
+            </button>
+            
+            <a
+              href="/openweather"
+              className="block w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 text-center"
+            >
+              🌤️ OpenWeatherMap 版本
+            </a>
+          </div>
         </div>
         
         <div className="text-center mt-6">
