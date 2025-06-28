@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 
 interface OpenWeatherData {
   location: string;
@@ -58,7 +59,7 @@ export default function OpenWeatherPage() {
     }
   }, []);
 
-  const fetchWeather = async (cityName?: string, lat?: number, lon?: number) => {
+  const fetchWeather = useCallback(async (cityName?: string, lat?: number, lon?: number) => {
     if (!apiKey || !apiKey.trim() || apiKey === 'your_api_key_here') {
       setError('请先设置有效的 API Key');
       setLoading(false);
@@ -94,7 +95,6 @@ export default function OpenWeatherPage() {
       
       if (!response.ok) {
         if (response.status === 401) {
-          const errorData = await response.json().catch(() => ({}));
           throw new Error(`API Key 无效！请检查：
           
 1. 🔑 API Key 是否正确复制
@@ -134,7 +134,7 @@ export default function OpenWeatherPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [apiKey]);
 
   const getCurrentLocation = async () => {
     if (!navigator.geolocation) {
@@ -181,7 +181,7 @@ export default function OpenWeatherPage() {
     if (apiKey && apiKey.trim() && apiKey !== 'your_api_key_here') {
       fetchWeather();
     }
-  }, [apiKey]);
+  }, [apiKey, fetchWeather]);
 
   const handleApiKeySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -319,10 +319,12 @@ export default function OpenWeatherPage() {
         className="text-center mb-8 transition-all duration-500 ease-in-out"
       >
         <div className="text-6xl mb-4 transition-transform duration-300 hover:scale-110">
-          <img 
+          <Image 
             src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
             alt={weatherData.description}
-            className="w-20 h-20 mx-auto transition-opacity duration-300"
+            width={80}
+            height={80}
+            className="mx-auto transition-opacity duration-300"
           />
         </div>
         <div className="text-4xl font-bold text-white mb-2 transition-all duration-300">
